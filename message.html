@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Messages</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f6f8;
+      padding: 20px;
+    }
+    .container {
+      max-width: 800px;
+      margin: auto;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #2c3e50;
+    }
+    .message-card {
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      padding: 15px;
+      margin-bottom: 15px;
+      background: #fff;
+    }
+    .message-card.pending {
+      border-left: 4px solid #f39c12;
+    }
+    .message-card.replied {
+      border-left: 4px solid #27ae60;
+    }
+    .message-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    .message-subject {
+      font-weight: bold;
+      font-size: 16px;
+      color: #2c3e50;
+    }
+    .message-status {
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: bold;
+    }
+    .status-pending {
+      background: #fff3cd;
+      color: #856404;
+    }
+    .status-replied {
+      background: #d4edda;
+      color: #155724;
+    }
+    .message-meta {
+      font-size: 13px;
+      color: #7f8c8d;
+      margin-bottom: 10px;
+    }
+    .message-body {
+      background: #f8f9fa;
+      padding: 10px;
+      border-radius: 5px;
+      margin-bottom: 10px;
+    }
+    .reply-section {
+      background: #e8f5e9;
+      padding: 12px;
+      border-radius: 5px;
+      margin-top: 10px;
+      border-left: 3px solid #27ae60;
+    }
+    .reply-label {
+      font-weight: bold;
+      color: #155724;
+      margin-bottom: 5px;
+    }
+    .reply-text {
+      color: #2c3e50;
+      line-height: 1.5;
+    }
+    .reply-date {
+      font-size: 12px;
+      color: #666;
+      margin-top: 5px;
+    }
+    .btn-back {
+      display: block;
+      width: 200px;
+      margin: 20px auto;
+      padding: 10px;
+      background: #3498db;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      text-align: center;
+      text-decoration: none;
+    }
+    .btn-back:hover {
+      background: #2980b9;
+    }
+    .no-messages {
+      text-align: center;
+      padding: 40px;
+      color: #7f8c8d;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>My Messages & Responses</h2>
+    <div id="messageList"></div>
+    <a href="ConnectIn.html" class="btn-back">Back to Home</a>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const isLoggedIn = localStorage.getItem('studentLoggedIn') === 'true';
+      const messageList = document.getElementById('messageList');
+
+      if (!isLoggedIn) {
+        messageList.innerHTML = '<p class="no-messages">Please <a href="Student login.html" style="color: #3498db;">login</a> to view your messages.</p>';
+        return;
+      }
+
+      const userMessages = JSON.parse(localStorage.getItem('userMessages') || '[]');
+      const studentEmail = localStorage.getItem('studentEmail');
+      
+      // Filter messages for current user
+      const myMessages = userMessages.filter(msg => 
+        msg.senderEmail === studentEmail || 
+        msg.studentId === localStorage.getItem('studentName')
+      );
+
+      if (!myMessages.length) {
+        messageList.innerHTML = '<p class="no-messages">No messages yet. <a href="ConnectIn.html#Contact" style="color: #3498db;">Send your first message</a>.</p>';
+        return;
+      }
+
+      myMessages.forEach(msg => {
+        const card = document.createElement('div');
+        card.className = 'message-card ' + (msg.status === 'replied' ? 'replied' : 'pending');
+        
+        let replyHtml = '';
+        if (msg.status === 'replied' && msg.reply) {
+          replyHtml = `
+            <div class="reply-section">
+              <div class="reply-label">Admin Reply:</div>
+              <div class="reply-text">${msg.reply}</div>
+              ${msg.replyDate ? `<div class="reply-date">Replied on: ${new Date(msg.replyDate).toLocaleString()}</div>` : ''}
+            </div>
+          `;
+        }
+
+        card.innerHTML = `
+          <div class="message-header">
+            <span class="message-subject">${msg.subject}</span>
+            <span class="message-status status-${msg.status}">${msg.status === 'replied' ? 'Replied' : 'Pending'}</span>
+          </div>
+          <div class="message-meta">
+            To: ${msg.recipient || 'Administration'} • Sent: ${new Date(msg.sentDate).toLocaleString()}
+          </div>
+          <div class="message-body">
+            ${msg.message}
+          </div>
+          ${replyHtml}
+        `;
+        messageList.appendChild(card);
+      });
+    });
+  </script>
+</body>
+</html>

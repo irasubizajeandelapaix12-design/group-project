@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    body{
+      margin:0;
+      font-family:Arial;
+      background-color:rgb(204,202,202);
+      padding-top: 60px;
+    }
+
+    header{
+      background-color:rgb(236,233,228);
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:10px 40px;
+      z-index: 1000;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    nav a{
+      margin:0 15px;
+      text-decoration:none;
+      color:black;
+      font-weight:bold;
+      display: inline-block;
+    }
+
+    button{
+      cursor:pointer;
+    }
+
+    .btn1{
+      width:80px;
+      height:40px;
+      background-color:rgb(61,240,44);
+      border-radius:10px;
+      border:none;
+    }
+    .btn1 a {
+        text-decoration: none;
+    }
+
+    .btn2{
+        width:80px;
+        height:40px;
+        border-radius:10px;
+        background-color:rgb(227,231,235);
+        border:none;
+    }
+
+    .btn2 a {
+        text-decoration: none;
+    }
+    .nav-bar {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background-color: rgb(236,233,228);
+        border-top: 1px solid #ddd;
+        z-index: 1000;
+    }
+    .nav{
+        display: block;
+        text-align: center;
+        padding: 10px 40px;
+        box-sizing: border-box;
+    }
+
+    .nav a{
+        text-decoration: none;
+        color: #333;
+        font-size: 18px;
+        transition: 0.3s;
+        margin: 0 10px;
+        display: inline-block;
+        vertical-align: middle;
+    }
+
+    .notification-container, .message-container, .search-wrapper-bottom {
+        display: inline-block;
+        vertical-align: middle;
+    }
+
+    .nav a:hover{
+        color: #e1306c;
+        transform: scale(1.2);
+    }
+    .content-box{
+        width: 300px;
+        height: 200px;
+        margin: 20px;
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        display: inline-block;
+        vertical-align: top;
+        text-align: left;
+    }
+    .content-box img{
+        width: 100%;
+        height: 100%;
+        border-radius: 10px;
+    }
+     .content{
+        display: block;
+        text-align: center;
+        padding: 20px;
+    }
+    </style>
+</head>
+<body>
+<header>
+      <input type="text" id="search" placeholder="🍳 Search...">
+
+      <nav>
+       <a href="Schools.html">All</a>
+       <a href="Schools.html?type=nursery">Nursery</a>
+       <a href="Schools.html?type=primary">Primary</a>
+       <a href="Schools.html?type=secondary">Secondary</a>
+       <a href="Schools.html?type=tvet">TVET</a>
+       <a href="Schools.html?type=university">University</a>
+      </nav>
+
+
+   </header>
+
+   <section class="content" id="list"></section>
+
+    <section class="nav-bar">
+       <div class="nav">
+           <a href="Home.html">🏠<i>Home</i></a>
+           <div class="message-container">
+               <button class="message-btn" id="schoolMessageBtn">💬<i>Messages</i></button>
+           </div>
+           <div class="notification-container">
+               <button class="notification-btn" id="schoolNotificationBtn">🔔<span class="notification-badge" id="schoolNotificationBadge" style="display:none;">0</span></button>
+               <div class="notification-dropdown" id="schoolNotificationDropdown" style="position:fixed; bottom:72px; right:20px; width:300px; background:white; border:1px solid #ccc; display:none; padding:10px; border-radius:10px; box-shadow:0 0 10px rgba(0,0,0,0.1);">
+                   <h3>Notifications</h3>
+                   <p>No new notifications.</p>
+               </div>
+           </div>
+           <div class="search-wrapper-bottom">
+               <input type="text" id="searchBottom" placeholder="🍳 Search..." style="width: 150px; padding: 6px 12px; border-radius: 20px; border: 1px solid #ddd; outline: none; font-size: 14px;">
+           </div>
+           <a href="Schools.html">🎓<i>Schools</i></a>
+       </div>
+    </section>
+
+    <script>
+    document.getElementById('schoolNotificationBtn')?.addEventListener('click', () => {
+        const dropdown = document.getElementById('schoolNotificationDropdown');
+        dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
+    });
+    document.getElementById('schoolMessageBtn')?.addEventListener('click', () => {
+        window.location.href = 'Home.html'; // Redirect to home for the main messenger
+    });
+    </script>
+
+   <script>
+   document.addEventListener('DOMContentLoaded', () => {
+     const list = document.getElementById('list');
+     const params = new URLSearchParams(window.location.search);
+     const filter = (params.get('type') || 'all').toLowerCase();
+
+     function renderSchools() {
+       const schools = JSON.parse(localStorage.getItem('registeredSchools') || '[]');
+       list.innerHTML = '';
+       const filtered = filter === 'all' ? schools : schools.filter(s => (s.level || '').toLowerCase() === filter);
+       if (!filtered.length) {
+         list.innerHTML = '<p style="display:flex; justify-content:center; align-items:center; text-align:center; width:100%; min-height:300px; color:#666; font-size:14px;">No schools registered yet.</p>';
+         return;
+       }
+       filtered.forEach(school => {
+         const box = document.createElement('div');
+         box.className = 'content-box school-item';
+         box.dataset.schoolName = school.name.toLowerCase();
+         box.dataset.schoolLevel = (school.level || '').toLowerCase();
+         const media = (school.mediaGallery && school.mediaGallery.length) ? school.mediaGallery[0] : null;
+         box.innerHTML = `
+           ${media && (media.type === 'image' || media.type === 'img') ? `<img src="${media.src}" alt="${school.name}" style="width:100%; height:100%; object-fit:cover; border-radius:10px;">` : media && media.type === 'video' ? `<video src="${media.src}" controls style="width:100%; height:100%; object-fit:cover; border-radius:10px;"></video>` : `<img src="Img/download.jpg" alt="placeholder" style="width:100%; height:100%; object-fit:cover; border-radius:10px;">`}
+           <div style="position:absolute; bottom:0; left:0; right:0; padding:10px; background:linear-gradient(transparent, rgba(0,0,0,0.7)); color:white; border-radius:0 0 10px 10px;">
+             <strong>${school.name}</strong><br>
+             <small>${school.level ? school.level.charAt(0).toUpperCase() + school.level.slice(1) : 'Unknown'} • ${school.location}</small>
+             ${school.logo ? `<br><img src="${school.logo}" style="width:30px; height:30px; border-radius:50%; object-fit:cover; margin-top:5px; border:2px solid white;">` : ''}
+           </div>
+         `;
+         box.style.position = 'relative';
+         box.style.cursor = 'pointer';
+         box.addEventListener('click', () => showSchoolDetail(school));
+         list.appendChild(box);
+       });
+     }
+
+     function showSchoolDetail(school) {
+       const mediaItems = school.mediaGallery || [];
+       const mediaHtml = mediaItems.map(m => {
+         if (m.type === 'image' || m.type === 'img') return `<img src="${m.src}" style="max-width:100%; border-radius:8px; margin:8px 0;">`;
+         if (m.type === 'video') return `<video src="${m.src}" controls style="max-width:100%; border-radius:8px; margin:8px 0;"></video>`;
+         return '';
+       }).join('');
+       const detail = `
+         <div style="position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:3000; display:flex; justify-content:center; align-items:center; padding:20px;" id="schoolDetail">
+           <div style="background:white; padding:25px; border-radius:12px; max-width:600px; width:100%; max-height:90vh; overflow-y:auto; position:relative;">
+             <button onclick="document.getElementById('schoolDetail').remove()" style="position:absolute; top:10px; right:15px; background:none; border:none; font-size:22px; cursor:pointer;">✕</button>
+             <div style="text-align:center; margin-bottom:15px;">
+               ${school.logo ? `<img src="${school.logo}" style="width:90px; height:90px; border-radius:50%; object-fit:cover; border:3px solid #eee;">` : `<div style="width:90px; height:90px; border-radius:50%; background:#ddd; display:inline-flex; align-items:center; justify-content:center; font-size:32px;">🏫</div>`}
+               <h2>${school.name}</h2>
+               <span style="background:#3498db; color:white; padding:4px 10px; border-radius:12px; font-size:12px;">${school.level ? school.level.toUpperCase() : 'UNKNOWN'}</span>
+               <p style="color:#666;">📍 ${school.location}</p>
+             </div>
+             ${school.mediaDescription ? `<div style="background:#f8f9fa; padding:12px; border-radius:8px; margin:10px 0;"><strong>About:</strong> ${school.mediaDescription}</div>` : ''}
+             ${mediaHtml ? `<div style="margin-top:10px;"><strong>Gallery:</strong><br>${mediaHtml}</div>` : ''}
+             <div style="margin-top:15px; padding-top:10px; border-top:1px solid #eee; font-size:13px; color:#666;">
+               <strong>Admin:</strong> ${school.adminName} • <strong>Email:</strong> ${school.email} • <strong>Phone:</strong> ${school.phone}
+             </div>
+           </div>
+         </div>
+       `;
+       const div = document.createElement('div');
+       div.innerHTML = detail;
+       document.body.appendChild(div);
+     }
+
+     renderSchools();
+
+     const searchInput = document.getElementById('search');
+     const searchBottom = document.getElementById('searchBottom');
+
+     function filterSchools(event) {
+       const query = event.target.value.toLowerCase();
+       if (searchInput) searchInput.value = event.target.value;
+       if (searchBottom) searchBottom.value = event.target.value;
+
+       let visibleCount = 0;
+       document.querySelectorAll('.school-item').forEach(box => {
+         const matches = box.dataset.schoolName.includes(query) || box.dataset.schoolLevel.includes(query);
+         box.style.display = matches ? 'inline-block' : 'none';
+         if (matches) visibleCount++;
+       });
+
+       let noResults = document.getElementById('noResultsMsg');
+       if (!noResults) {
+         noResults = document.createElement('p');
+         noResults.id = 'noResultsMsg';
+         noResults.style.display = 'flex';
+         noResults.style.justifyContent = 'center';
+         noResults.style.alignItems = 'center';
+         noResults.style.textAlign = 'center';
+         noResults.style.width = '100%';
+         noResults.style.minHeight = '300px';
+         noResults.style.color = '#666';
+         noResults.style.fontSize = '14px';
+         noResults.textContent = 'your search is not available now in a system keep waiting for search';
+         list.appendChild(noResults);
+       }
+       noResults.style.display = visibleCount === 0 ? 'flex' : 'none';
+     }
+
+     if (searchInput) searchInput.addEventListener('input', filterSchools);
+     if (searchBottom) searchBottom.addEventListener('input', filterSchools);
+   });
+   </script>
+</body>
+</html>

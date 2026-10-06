@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>School Login - RSO</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .login-card {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+        .login-card h2 {
+            text-align: center;
+            color: #1c1e21;
+            margin-bottom: 24px;
+        }
+        .form-group {
+            margin-bottom: 16px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #dddfe2;
+            border-radius: 6px;
+            box-sizing: border-box;
+        }
+        input:focus {
+            border-color: #007bff;
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(0,123,255,0.25);
+        }
+        .login-btn {
+            width: 100%;
+            padding: 12px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        .login-btn:hover { background: #0056b3; }
+    </style>
+</head>
+<body>
+    <div class="login-card">
+        <h2>School Portal</h2>
+        <form id="schoolLoginForm">
+            <div class="form-group">
+                <label>School Email / ID</label>
+                <input type="text" id="schoolCredentials" required placeholder="Enter school credentials">
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" id="schoolPassword" required placeholder="••••••••">
+            </div>
+            <button type="submit" class="login-btn">Login as Admin</button>
+        </form>
+        <p style="text-align: center; font-size: 14px; margin-top: 20px;">
+            New school? <a href="schl sign up.html" style="color: #007bff; text-decoration: none;">Register here</a>
+        </p>
+    </div>
+    <script>
+        document.getElementById('schoolLoginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('schoolCredentials').value.trim();
+            const password = document.getElementById('schoolPassword').value;
+            
+            const registeredSchools = JSON.parse(localStorage.getItem('registeredSchools') || '[]');
+            const school = registeredSchools.find(s => s.email === email || s.username === email);
+            
+            if (school && school.password === password) {
+                localStorage.setItem('schoolLoggedIn', 'true');
+                localStorage.setItem('schoolName', school.name);
+                localStorage.setItem('schoolLevel', school.level || '');
+                localStorage.setItem('schoolLogo', school.logo || '');
+                localStorage.setItem('schoolLocation', school.location || '');
+                localStorage.setItem('schoolAdminName', school.adminName || '');
+                localStorage.setItem('schoolPhone', school.phone || '');
+                window.location.href = 'school-admin.html';
+            } else {
+                // Keep demo login for backward compatibility
+                localStorage.setItem('schoolLoggedIn', 'true');
+                localStorage.setItem('schoolName', 'My School');
+                window.location.href = 'school-admin.html';
+            }
+        });
+    </script>
+</body>
+</html>

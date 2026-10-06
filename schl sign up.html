@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="rw">
+<head>
+  <meta charset="UTF-8">
+  <title>Kwiyandikisha Ikigo</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6f8;
+      padding: 20px;
+    }
+    .container {
+      max-width: 500px;
+      margin: auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h2 {
+      text-align: center;
+    }
+    label {
+      font-weight: bold;
+      margin-top: 10px;
+      display: block;
+    }
+    input, select {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    button {
+      margin-top: 15px;
+      width: 100%;
+      padding: 10px;
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #0056b3;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h2>School registration</h2>
+
+  <form id="registrationForm">
+    <!-- school information -->
+    <label for="school_name">School Name</label>
+    <input type="text" id="school_name" name="school_name" required>
+
+    <label for="location">Location</label>
+    <input type="text" id="location" name="location" required>
+
+    <label for="level">Level</label>
+    <select id="level" name="level">
+      <option>Nursery</option>
+      <option>Primary</option>
+      <option>Secondary</option>
+      <option>TVET</option>
+      <option>University</option>
+    </select>
+
+    <!-- Admin -->
+    <label for="admin_name">Name of Head Master/Mistress</label>
+    <input type="text" id="admin_name" name="admin_name" required>
+
+    <label for="email">Email</label>
+    <input type="email" id="email" name="email" required>
+
+    <label for="phone">Phone number</label>
+    <input type="tel" id="phone" name="phone" required>
+
+    <!-- Account -->
+    <label for="username">Username</label>
+    <input type="text" id="username" name="username" required>
+
+    <label for="password">Password</label>
+    <input type="password" id="password" name="password" required>
+
+    <label for="confirm_password">Confirm Password</label>
+    <input type="password" id="confirm_password" name="confirm_password" required>
+
+    <!-- Submit -->
+    <button type="submit">Sign Up</button> 
+  </form>
+</div>
+
+<script>
+  document.getElementById('registrationForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const pass = document.getElementById('password').value;
+    const confirm = document.getElementById('confirm_password').value;
+    
+    if (pass !== confirm) {
+      alert("Passwords do not match!");
+      return;
+    }
+
+const level = document.getElementById('level').value.toLowerCase();
+     const autoLevels = ['nursery', 'primary', 'secondary', 'tvet', 'university'];
+if (autoLevels.includes(level)) {
+       const schoolData = {
+         name: document.getElementById('school_name').value.trim(),
+         location: document.getElementById('location').value.trim(),
+         level: level,
+         adminName: document.getElementById('admin_name').value.trim(),
+         email: document.getElementById('email').value.trim(),
+         phone: document.getElementById('phone').value.trim(),
+         username: document.getElementById('username').value.trim(),
+         password: document.getElementById('password').value,
+         logo: localStorage.getItem('schoolLogo') || '',
+         mediaGallery: JSON.parse(localStorage.getItem('schoolMediaGallery') || '[]'),
+         mediaDescription: localStorage.getItem('schoolMediaDesc') || '',
+         registeredAt: new Date().toISOString()
+       };
+const schools = JSON.parse(localStorage.getItem('registeredSchools') || '[]');
+       schools.unshift(schoolData);
+       localStorage.setItem('registeredSchools', JSON.stringify(schools));
+       
+       // Redirect to Schools.html filtered by level
+       setTimeout(() => {
+         window.location.href = 'Schools.html?type=' + level;
+       }, 500);
+     }
+  });
+</script>
+
+</body>
+</html>

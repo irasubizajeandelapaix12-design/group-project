@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RSO Website</title>
+
+<style>
+
+body{
+margin:0;
+font-family:Arial;
+background-color:rgb(204,202,202);
+padding-top: 60px;
+}
+
+
+header{
+background-color:rgb(236,233,228);
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:10px 40px;
+z-index: 1000;
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+box-sizing: border-box;
+}
+
+nav a{
+margin:0 15px;
+text-decoration:none;
+color:black;
+font-weight:bold;
+display: inline-block;
+}
+
+button{
+cursor:pointer;
+}
+
+.btn1{
+width:80px;
+height:40px;
+background-color:rgb(61,240,44);
+border-radius:10px;
+border:none;
+}
+.btn1 a {
+    text-decoration: none;
+}
+
+.btn2{
+width:80px;
+height:40px;
+border-radius:10px;
+background-color:rgb(227,231,235);
+border:none;
+}
+
+.btn2 a {
+    text-decoration: none;
+}
+
+button:hover{
+opacity:0.8;
+}
+
+
+
+.slideshow{
+position:relative;
+width:100%;
+height:500px;
+overflow:hidden;
+}
+
+.slides{
+width:100%;
+height:500px;
+display:none;
+object-fit:cover;
+}
+
+.slides:hover{
+transform:scale(1.05);
+transition:0.5s;
+}
+
+.caption{
+position:absolute;
+bottom:30px;
+left:50%;
+transform:translateX(-50%);
+color:white;
+font-size:30px;
+background:rgba(0,0,0,0.5);
+padding:10px;
+border-radius:5px;
+}
+
+
+.About{
+background:white;
+padding:20px;
+}
+
+.about-container{
+display:flex;
+flex-wrap:wrap;
+justify-content:center;
+gap:20px;
+}
+
+.about-us{
+border:1px solid gray;
+padding:20px;
+width:250px;
+border-radius:10px;
+background-color:rgb(167,164,160);
+}
+
+.about-us:hover{
+box-shadow:0 0 20px black;
+}
+
+
+#Services{
+padding:20px;
+background:#eee;
+text-align:center;
+}
+
+
+#Contact{
+background:white;
+padding:30px;
+text-align:center;
+}
+
+input,textarea{
+width:300px;
+padding:10px;
+margin:10px;
+border-radius:5px;
+border:1px solid gray;
+}
+
+
+footer{
+background:black;
+color:white;
+text-align:center;
+padding:10px;
+}
+
+</style>
+<body>
+
+<header>
+<h2>RSO</h2>
+
+<nav>
+<a href="#Home" onclick="document.querySelectorAll('.about-us').forEach(el=>el.style.display='block')">Home</a>
+<a href="#About">About</a>
+<a href="#Services">Services</a>
+<a href="#Contact" onclick="checkContactAuth()">Contact</a>
+</nav>
+
+<div>
+<button class="btn1" type="button" onclick="location.href='Student login.html'">
+    Student login
+</button>
+
+<button class="btn2" type="button" onclick="location.href='School login.html'">
+    School login
+</button>
+</div>
+
+</header>
+
+<section id="Home">
+
+<div class="slideshow">
+
+<img class="slides" src="Img/download (1).jpg" alt="slide1">
+<img class="slides" src="Img/download (2).jpg" alt="slide2">
+<img class="slides" src="Img/download (3).jpg" alt="slide3">
+
+<div class="caption">Welcome to RSO</div>
+
+</div>
+
+</section>
+
+<section class="About" id="About">
+
+<h1>About Us</h1>
+
+<div class="about-container">
+
+<div class="about-us">
+<h3>Introduction</h3>
+<p>RSO is an organization that focuses on innovation and community development.</p>
+</div>
+
+<div class="about-us">
+<h3>Our Mission</h3>
+<p>Our mission is to empower people through technology and collaboration.</p>
+</div>
+
+<div class="about-us">
+<h3>Our Team</h3>
+<p>We are a group of passionate developers and designers.</p>
+</div>
+
+<div class="about-us">
+<h3>Contact Information</h3>
+<p>Email: info@rso.com</p>
+</div>
+
+<div class="about-us">
+<h3>Our Values</h3>
+<p>Integrity, Innovation, Teamwork and Excellence.</p>
+</div>
+
+</div>
+
+</section>
+
+<section id="Services">
+
+<h1>Our Services</h1>
+<p>We provide web development, training, and digital solutions.</p>
+
+</section>
+
+<section id="Contact">
+
+<h1>Contact Us</h1>
+
+<div id="contactLoginPrompt" style="display:none; padding: 20px; background: #fff3cd; border-radius: 8px; margin: 20px auto; max-width: 500px;">
+  <p style="margin-bottom: 15px;">You must be logged in to send a message.</p>
+  <button class="btn1" onclick="localStorage.setItem('redirectAfterLogin','contact'); window.location.href='Student login.html'">Login to Contact</button>
+</div>
+
+<div id="contactForm" style="display:none; max-width: 600px; margin: 0 auto; padding: 20px; background: white; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+  <form id="messageForm">
+    <label style="display:block; text-align:left; font-weight:bold; margin-bottom:5px;">Send To:</label>
+    <select id="recipientType" required style="width:100%; padding:10px; margin:10px 0; border-radius:5px; border:1px solid gray;">
+      <option value="">-- Select Recipient --</option>
+      <option value="admin">School Administration</option>
+      <option value="admission">Admission Office</option>
+      <option value="finance">Finance Office</option>
+      <option value="academic">Academic Affairs</option>
+      <option value="support">Student Support</option>
+    </select>
+
+    <label style="display:block; text-align:left; font-weight:bold; margin-bottom:5px;">Subject:</label>
+    <input type="text" id="subject" placeholder="Enter subject" required style="width:100%; padding:10px; margin:10px 0; border-radius:5px; border:1px solid gray;">
+
+    <label style="display:block; text-align:left; font-weight:bold; margin-bottom:5px;">Message:</label>
+    <textarea id="messageBody" rows="5" placeholder="Type your message here..." required style="width:100%; padding:10px; margin:10px 0; border-radius:5px; border:1px solid gray; resize:vertical;"></textarea>
+
+    <label style="display:block; text-align:left; font-weight:bold; margin-bottom:5px;">Your Student ID (if applicable):</label>
+    <input type="text" id="studentId" placeholder="e.g. #STU001" style="width:100%; padding:10px; margin:10px 0; border-radius:5px; border:1px solid gray;">
+
+    <button type="submit" class="btn1" style="width:100%; margin-top:15px;">Send Message</button>
+  </form>
+</div>
+
+<div id="contactSuccess" style="display:none; padding: 20px; background: #d4edda; border-radius: 8px; margin: 20px auto; max-width: 500px; text-align: center;">
+  <h3 style="color: #155724;">Message Sent Successfully!</h3>
+  <p>Your application has been submitted. You can view responses in your messages.</p>
+  <button class="btn1" onclick="window.location.href='message.html'">View My Messages</button>
+</div>
+
+</section>
+
+<footer>
+
+<p>© 2026 RSO Website. All Rights Reserved.</p>
+
+</footer>
+
+<script>
+
+// Check login status for contact form
+function checkContactAuth() {
+  const isLoggedIn = localStorage.getItem('studentLoggedIn') === 'true';
+  const contactForm = document.getElementById('contactForm');
+  const contactLoginPrompt = document.getElementById('contactLoginPrompt');
+  const contactSuccess = document.getElementById('contactSuccess');
+  
+  if (isLoggedIn) {
+    if (contactForm) contactForm.style.display = 'block';
+    if (contactLoginPrompt) contactLoginPrompt.style.display = 'none';
+  } else {
+    if (contactForm) contactForm.style.display = 'none';
+    if (contactLoginPrompt) contactLoginPrompt.style.display = 'block';
+  }
+}
+
+// Handle message submission
+document.addEventListener('DOMContentLoaded', function() {
+  checkContactAuth();
+  
+  const messageForm = document.getElementById('messageForm');
+  if (messageForm) {
+messageForm.addEventListener('submit', function(e) {
+       e.preventDefault();
+       
+       const isLoggedIn = localStorage.getItem('studentLoggedIn') === 'true';
+       if (!isLoggedIn) {
+         alert('Please login first to send a message.');
+         window.location.href = 'Student login.html';
+         return;
+       }
+
+       const messageData = {
+         id: 'msg_' + Date.now(),
+         recipient: document.getElementById('recipientType').value,
+         subject: document.getElementById('subject').value,
+         message: document.getElementById('messageBody').value,
+         studentId: document.getElementById('studentId').value,
+         senderName: localStorage.getItem('studentName') || 'Anonymous',
+         senderEmail: localStorage.getItem('studentEmail') || '',
+         status: 'pending',
+         reply: '',
+         replyDate: '',
+         sentDate: new Date().toISOString()
+       };
+
+       const applications = JSON.parse(localStorage.getItem('schoolApplications') || '[]');
+       applications.unshift(messageData);
+       localStorage.setItem('schoolApplications', JSON.stringify(applications));
+
+       const adminMessages = JSON.parse(localStorage.getItem('adminMessages') || '[]');
+       adminMessages.unshift({
+         sender: localStorage.getItem('studentName') || 'Anonymous',
+         text: messageData.message,
+         time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+         subject: messageData.subject,
+         recipient: messageData.recipient,
+         studentId: messageData.studentId,
+         status: 'pending'
+       });
+       localStorage.setItem('adminMessages', JSON.stringify(adminMessages));
+
+       const userMessages = JSON.parse(localStorage.getItem('userMessages') || '[]');
+       userMessages.unshift({
+         ...messageData,
+         userView: 'sent'
+       });
+       localStorage.setItem('userMessages', JSON.stringify(userMessages));
+
+       document.getElementById('contactForm').style.display = 'none';
+       document.getElementById('contactSuccess').style.display = 'block';
+       messageForm.reset();
+     });
+   }
+
+  // Check if returning from login with redirect
+  const redirectAfterLogin = localStorage.getItem('redirectAfterLogin');
+  if (redirectAfterLogin === 'contact' && localStorage.getItem('studentLoggedIn') === 'true') {
+    localStorage.removeItem('redirectAfterLogin');
+    checkContactAuth();
+  }
+});
+
+    let slideIndex = 0;
+    showSlides();
+
+    function showSlides(){
+
+let slides=document.getElementsByClassName("slides");
+
+for(let i=0;i<slides.length;i++){
+slides[i].style.display="none";
+}
+
+slideIndex++;
+
+if(slideIndex>slides.length){
+slideIndex=1;
+}
+
+slides[slideIndex-1].style.display="block";
+
+setTimeout(showSlides,3000);
+
+}
+
+</script>
+
+</body>
+</html>

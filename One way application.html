@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+    *{
+      font-family: Arial, Helvetica, sans-serif;
+    }
+    body{
+      margin:0;
+      font-family:Arial;
+      background-image: url(Img/download\ \(1\).jpg);
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-attachment: fixed;
+      
+    }
+    fieldset{
+       width: fit-content;
+       height: min-content;
+      border: 1px solid rgb(220, 215, 215);
+      border-radius: 8px;
+      color: lightgreen;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+    .container{
+      background: white;
+      height: 130%;
+      width: 600px;
+      border-radius: 8px;
+      letter-spacing: 1px;
+      margin: 20px auto;
+    }
+   .personal{
+     font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; 
+    background-color:WHITE;
+    border: 0;
+    border-radius: 8px;
+    width: 100%;
+    height: 0%;
+    text-align: center;
+     box-shadow: 0 0 20px rgba(0, 150, 255, 0.6);
+     transition: transform 0.3s, box-shadow 0.3s;
+   }
+   .personal:hover{
+    transform: translateY(-10px);
+    box-shadow: 0 15px 25px rgba(0,0,0,0.3);
+   }
+    input{
+    width: 80%;
+    border-radius: 8px;
+    padding: 8px;
+    color: blue;
+    border: 1px solid rgb(141, 141, 91);
+  }
+  textarea{
+    border-radius: 5px;
+    height: 30px;
+  }
+  .parent{
+    font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; 
+    background-color:white;
+    border: 0;
+    border-radius: 5px;
+    width: 100%;
+    height: 0%;
+    text-align: center;
+    
+     box-shadow: 0 0 20px rgba(0, 150, 255, 0.6);
+     transition: transform 0.3s, box-shadow 0.3s;
+
+  }
+    .parent:hover{
+transform: translateX(-10px);
+      box-shadow: 0 15px 25px rgba(0,0,0,0.3)
+  
+    }
+  .acade{
+    font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; 
+    background-color:white;
+    border: 0;
+    border-radius: 5px;
+    width: 100%;
+    height: 0%;
+    text-align: center;
+    
+     box-shadow: 0 0 20px rgba(0, 150, 255, 0.6);
+     transition: transform 0.3s, box-shadow 0.3s;
+  }
+  .acade:hover{
+transform: translateX(-10px);
+      box-shadow: 0 15px 25px rgba(0,0,0,0.3)
+  
+  }
+  .applying{
+    font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; 
+    background-color:white;
+    border: 0;
+    border-radius: 5px;
+    width: 100%;
+    height: 0%;
+    text-align: center;
+     box-shadow: 0 0 20px rgba(0, 150, 255, 0.6);
+     transition: transform 0.3s, box-shadow 0.3s;
+  }
+  .applying:hover{
+transform: translateX(-10px);
+      box-shadow: 0 15px 25px rgba(0,0,0,0.3)
+  
+  }
+  .ref{
+    font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; 
+    background-color:white;
+    border: 0;
+    border-radius: 5px;
+    width: 100%;
+    height: 0%;
+    text-align: center;
+    
+     box-shadow: 0 0 20px rgba(0, 150, 255, 0.6);
+     transition: transform 0.3s, box-shadow 0.3s;
+  }
+  .ref:hover{
+transform: translateX(-10px);
+      box-shadow: 0 15px 25px rgba(0,0,0,0.3)
+  
+  }
+  .activities{
+font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; 
+    background-color:white;
+    border: 0;
+    border-radius: 5px;
+    width: 100%;
+    height: 0%;
+    text-align: center;
+    
+     box-shadow: 0 0 20px rgba(0, 150, 255, 0.6);
+     transition: transform 0.3s, box-shadow 0.3s;
+  }
+  .activities:hover{
+transform: translateX(-10px);
+      box-shadow: 0 15px 25px rgba(0,0,0,0.3)
+  
+  }
+  .mot{
+font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; 
+    background-color:white;
+    border: 0;
+    border-radius: 5px;
+    width: 100%;
+    height: 0%;
+    text-align: center;
+    
+     box-shadow: 0 0 20px rgba(0, 150, 255, 0.6);
+     transition: transform 0.3s, box-shadow 0.3s;
+  }
+  .mot:hover{
+transform: translateX(-10px);
+      box-shadow: 0 15px 25px rgba(0,0,0,0.3)
+  
+  }
+  .Del{
+    font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; 
+    background-color:white;
+    border: 0;
+    border-radius: 5px;
+    width: 100%;
+    height: 0%;
+    text-align: center;
+    
+     box-shadow: 0 0 15px rgba(0, 150, 255, 0.6);
+     transition: transform 0.3s, box-shadow 0.3s;
+    
+  }
+  .Del:hover{
+transform: translateX(-10px);
+      box-shadow: 0 15px 25px rgba(0,0,0,0.3)
+  
+  }
+  .btn{
+    background-color: rgb(40, 222, 235);
+    width: 150px;
+    height: 50px;
+    border: none;
+    border-radius: 7px;
+    color: blue;
+    align-items: center;
+    justify-content: center;
+    text-align: center; 
+    
+     box-shadow: 0 0 20px rgba(0, 150, 255, 0.6);
+     transition: transform 0.3s, box-shadow 0.3s;
+  }
+  button :hover{
+   transform: translateY(-5px);
+    box-shadow: 0 10px 8px rgba(0,0,0,0.3);
+     
+  }
+  button a {
+    text-decoration: none;
+    height: 50px;
+    width: 150px;
+    font-size: 20px;
+    font-weight: 100px;
+    overflow: visible;
+   
+  }
+  h3{
+    font-size:  size 16px;
+  }
+  h1{
+ font-size:48px;
+ color: rgb(15, 15, 15);
+ text-align: center;
+ justify-content: center;
+ align-items: center;
+ display: grid;
+  }
+ .gender{
+  align-items: center;
+justify-content: center;
+display: flex;
+
+ }
+  </style>
+ </head>
+ <body>
+   <div class="container">
+      <fieldset>
+
+    <h1>  ONE WAY APPLICATION</h1>
+    <div class="personal">
+   <h3>Personal information</h3>
+  <input type="text" placeholder="Full name">
+  <p>Date of birth</p>
+  <input type="date" name="date of birth" id="date"><br>
+  <p>Select your Gender</p>
+  <div class="gender">
+ <input type="radio" name="gender">Male
+ <input type="radio" name="gender">Female
+ <input type="radio" name="gender">Other
+</div><br>
+     <input type="text" placeholder="Nationality"><br><br>
+ <textarea name="" id="" rows="2">Address</textarea><br><br>
+     <input type="text" name="city" placeholder="e.g city,state,Zip"><br><br>
+     <input type="text" name="tel" id="" placeholder="Enter phone number"><br><br>
+     <input type="email" name="email" id="email" placeholder="email"><br><br>
+</div>
+   <div class="parent">
+   <h3>Parent/Gardian information</h3>
+     <input type="text" name="father's name" id="father's name" placeholder="father's name"><br><br>
+     <input type="text" placeholder="Mother's name"><br><br>
+     <input type="text" placeholder="Gardian's name"><br><br>
+     <input type="text" placeholder="Contacts number"><br><br>
+     <input type="text" placeholder="Email address"><br><br>
+    <input type="text" placeholder="Occupation"><br><br>
+   </div>
+   <div class="acade">
+       <h3>Academic information</h3>
+     <input type="text" placeholder="Last school/college attended"><br><br>
+     <textarea rows="2">Address</textarea><br><br>
+     <input type="text" placeholder="Year of completion/Graduation"><br><br>
+     <input type="text" placeholder="Grades/GPA"> <br><br>
+     <input type="text" placeholder="Subject/Major"><br><br>
+    </div>
+    <div class="applying">
+      <h3>Program applying for</h3>
+      <input type="text" placeholder="Applying to (e.g School)"><br><br>
+    <input type="text" placeholder="Program/Course name"><br><br>
+    <input type="text" placeholder="Preferred start date"><br><br>
+    <input type="text" placeholder="Duration of study"><br><br>
+   </div>
+   <div  class="activities" >
+     <h3>Extracurricular activities</h3>
+  <input type="text" placeholder="Extracurricular activities"><br><br>
+ </div>
+<div class="mot">
+      <h3>Personal, statement/Motivation</h3>
+   <textarea rows="3"></textarea><br><br>
+
+</div>
+  <div class="ref">
+    <h3>Reference/Recommendation</h3>
+ <input type="text" placeholder="Name"><br><br>
+ <input type="text" placeholder="Position/Relationship"><br><br>
+  </div>   
+  <div class="Del">
+     <h3>Approval</h3>
+    <input type="text" placeholder="Name" ><br><br>
+     <input type="text" placeholder="signature"><br><br>
+      <p>I declare that all information given above is true and exact </p>
+  </div>
+  <button class="btn" id="submit"><a href="#">Submit Application</a></button>
+  </fieldset>
+  </div>
+   
+   <script>
+       document.getElementById('submit').addEventListener('click', function(e) {
+           e.preventDefault();
+           alert('Application submitted successfully!');
+           window.location.href = 'Herve.html';
+       });
+   </script>
+</body>
+</html>
